@@ -50,7 +50,7 @@ public class JwtValidationFilter extends OncePerRequestFilter {
 			.parseClaimsJws(jwt);
 		
 		String subject = parsedJws.getBody().getSubject();
-		var authorities = (List<Map<String,String>>)parsedJws.getBody().get("authorities");
+		List<Map<String,String>> authorities = (List<Map<String,String>>)parsedJws.getBody().get("authorities");
 		
 		List<SimpleGrantedAuthority> grantedAuthorities = new ArrayList<>();
 		authorities.forEach(authorityMap ->{
