@@ -3,11 +3,12 @@ An app to manage your monthly bills and to keep track of the daily expenses
 
 Current Features:-
 
-1)Create bills.
-2)Add items to a bill.
-3)User Management.
-4)Total Expenditure calculation.
-
+<ul>
+<li>1)Create bills.
+<li>2)Add items to a bill.
+<li>3)User Management.
+<li>4)Total Expenditure calculation.
+</ul>
 Features to add :-
 
 1)Ability to manage group billing.
