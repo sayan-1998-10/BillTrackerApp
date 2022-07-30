@@ -1,0 +1,12 @@
+PROJECT - BILL TRACKER APPLICATION
+
+
+1> Update the price and modify the totalExpense field in Bill entity [Dynamic] - [DONE]
+2> Add delete item and delete bill feature - [DONE] 
+3> update item and bill feature. - [DONE]
+4> Handling exceptions globally using @ControllerAdvice and @Valid annotations. - [DONE]
+5> User Module [DONE]
+6> Mapping between user module and bill module [DONE]
+7> Apply Spring Security [DONE]
+8> JWT Login [DONE]
+9> Deleting child elements on CASCADE [DONE]
