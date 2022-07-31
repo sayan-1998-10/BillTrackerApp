@@ -22,6 +22,8 @@ import com.project.tracker.entity.Bill;
 import com.project.tracker.entity.Item;
 import com.project.tracker.services.interfaces.ItemService;
 
+import io.swagger.v3.oas.annotations.Parameter;
+
 @RestController
 @RequestMapping("items")
 public class ItemController {
@@ -56,7 +58,9 @@ public class ItemController {
 	
 	//search items by name
 	@GetMapping()
-	public List<ItemDto> findItemByName(@RequestParam(name = "itemName",required = false) String itemName) {
+	public List<ItemDto> findItemByName(
+			@Parameter(name = "itemName", description = "Enter Item Name") @RequestParam(name = "itemName",required = false) String itemName
+			) {
 		List<Item> itemList = itemService.findItemByName(itemName);
 		List<ItemDto> response = new ArrayList<ItemDto>();
 		itemList.forEach(item->{
