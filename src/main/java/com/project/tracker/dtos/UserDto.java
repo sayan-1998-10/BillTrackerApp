@@ -6,6 +6,8 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Email;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 import lombok.Data;
 
@@ -21,7 +23,7 @@ public class UserDto {
 	@javax.validation.constraints.Email
 	private String emailAddress;
 	
-	@JsonIgnore
+	@JsonProperty(access = Access.WRITE_ONLY)
 	@NotNull(message = "Password field cannot be empty")
 	@NotBlank(message = "Need to provide a strong password")
 	private String password;
