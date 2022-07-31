@@ -19,6 +19,9 @@ import com.project.tracker.security.services.ApplicationUserDetailsService;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		
+	@Autowired
+	private JwtConfig jwtConfig;
+	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		//disable session since we are using Jwt.
@@ -28,8 +31,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		
 		//add custom filters for jwt authentication and validation
 		http
-			.addFilter(new JwtAuthenticationFilter(authenticationManager()))
-			.addFilterAfter(new JwtValidationFilter(), JwtAuthenticationFilter.class);
+			.addFilter(new JwtAuthenticationFilter(authenticationManager(), jwtConfig))
+			.addFilterAfter(new JwtValidationFilter(jwtConfig), JwtAuthenticationFilter.class);
 		
 		http
 			.authorizeRequests()

@@ -11,28 +11,33 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.tracker.dtos.UserLoginRequest;
+import com.project.tracker.security.JwtConfig;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
+
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
-	@Value("${jwt.secret}")
-	private String SECRET_KEY;
+	private JwtConfig jwtConfig;
 	
 	private AuthenticationManager authenticationManager;
 
-	public JwtAuthenticationFilter(AuthenticationManager authenticationManager) {
+	public JwtAuthenticationFilter(AuthenticationManager authenticationManager,JwtConfig jwtConfig) {
 		this.authenticationManager = authenticationManager;
+		this.jwtConfig = jwtConfig;
 	}
 	
 	@Override
@@ -60,8 +65,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
 			Authentication authResult) throws IOException, ServletException {
 		
-		String key = SECRET_KEY ;
-		
+		String key = this.jwtConfig.getSecretKey();
+		System.out.println("Key is "+key);
 		String jwt = Jwts
 			.builder()
 			.claim("subject", authResult.getName())
@@ -72,7 +77,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 			.compact();
 		
 		
-		response.addHeader("Authorization", "Bearer " + jwt);
+		response.addHeader("Authorization", this.jwtConfig.getAuthorizationType() + " " + jwt);
 
 	}
 	

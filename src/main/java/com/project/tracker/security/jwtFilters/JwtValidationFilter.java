@@ -20,15 +20,24 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.project.tracker.security.JwtConfig;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 
 public class JwtValidationFilter extends OncePerRequestFilter {
 
-	@Value("${jwt.secret}")
-	private String SECRET_KEY;
+	private JwtConfig jwtConfig;
 	
+	
+	public JwtValidationFilter(JwtConfig jwtConfig) {
+		super();
+		this.jwtConfig = jwtConfig;
+	}
+
+
+
 	@SuppressWarnings("deprecation")
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -42,7 +51,7 @@ public class JwtValidationFilter extends OncePerRequestFilter {
 		}
 		
 		String jwt = bearerToken.split(" ")[1];
-		String key = SECRET_KEY;
+		String key = this.jwtConfig.getSecretKey();
 		
 		Jws<Claims> parsedJws = Jwts
 			.parser()
